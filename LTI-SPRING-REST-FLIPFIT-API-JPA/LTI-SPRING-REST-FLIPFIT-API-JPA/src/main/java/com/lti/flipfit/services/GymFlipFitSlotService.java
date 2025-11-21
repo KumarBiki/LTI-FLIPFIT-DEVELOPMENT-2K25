@@ -15,8 +15,8 @@ import com.lti.flipfit.entity.GymFlipFitSlot;
  */
 public interface GymFlipFitSlotService {
 	public GymFlipFitSlot createSlot(GymFlipFitSlot slot);
-    public List<GymFlipFitSlot> getSlotsForDate(Long centerId, Date date);
-    public Optional<GymFlipFitSlot> getSlotById(Long slotId);
+    public List<GymFlipFitSlot> getSlotsForDate(Integer centerId, Date date);
+    public Optional<GymFlipFitSlot> getSlotById(Integer slotId);
 	/**
 	 * Update Slot Info.
 	 *

@@ -4,18 +4,53 @@ import java.util.Date;
 
 import com.lti.flipfit.constants.UserStatus;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "gymuser")
 public class GymFlipFitUser {
 
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	
+	@Column(name = "firstname")
 	private String firstName;
+	
+	@Column(name = "lastname")
 	private String lastName;
+	
+	@Column(name = "email")
 	private String email;
+	
+	@Column(name = "password")
 	private String password;
+	
+	@Column(name = "phoneNo")
 	private String phoneNo;
+	
+	@Column(name = "status")
 	private String status;
+	
+	@OneToOne
+	@JoinColumn(name = "addressid", referencedColumnName = "id")
 	private GymFlipFitAddress address;
+	
+	@OneToOne
+	@JoinColumn(name = "roleid", referencedColumnName = "id")
 	private GymFlipFitRole role;
+	
+	@Column(name = "createdat")
 	private Date createdAt;
+	
+	@Column(name = "updatedat")
 	private Date updatedAt;
 	
 	public String getPassword() {
@@ -24,10 +59,10 @@ public class GymFlipFitUser {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getFirstName() {

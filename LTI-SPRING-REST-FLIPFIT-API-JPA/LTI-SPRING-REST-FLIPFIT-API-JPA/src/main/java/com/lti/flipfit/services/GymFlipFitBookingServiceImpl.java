@@ -62,7 +62,7 @@ public class GymFlipFitBookingServiceImpl implements GymFlipFitBookingService{
     }
 
 	//private final List<Booking> bookings = new ArrayList<>();
-    private final Map<Long, GymFlipFitBooking> bookings = new ConcurrentHashMap<>();
+    private final Map<Integer, GymFlipFitBooking> bookings = new ConcurrentHashMap<>();
 	private final AtomicLong counter = new AtomicLong();
 	
 	/**
@@ -83,14 +83,14 @@ public class GymFlipFitBookingServiceImpl implements GymFlipFitBookingService{
             throw new BookingConflictException("You already have a booking in this hour");
         if (slot.getBookedCount() >= slot.getCapacity() || slot.getStatus().equals("FULL"))
             throw new SlotNotFoundException(String.format("Booking failed. As Slot with id: %s is full.", bookingDetail.getSchedule().getSlotId()));
-        bookingDetail.getPayment().setBookingId(bookingDetail.getId());
+        bookingDetail.getPayment().setBooking(bookingDetail);
         GymFlipFitPayment payment = paymentService.processPayment(bookingDetail.getPayment());
         if(!payment.getStatus().equals("SUCCESS")) {
         	throw new PaymentFailureException("Payment Failed!");
         }
         GymFlipFitScheduler scheduler = schedulerService.scheduleSlot(bookingDetail.getSchedule());
         GymFlipFitBooking b = new GymFlipFitBooking();
-        b.setId(counter.incrementAndGet());
+        b.setId((int)counter.incrementAndGet());
         b.setCustomerId(bookingDetail.getCustomerId());
         //b.setCenterId(centerId);
         //b.setSlotId(slot.getId());
@@ -200,7 +200,7 @@ public class GymFlipFitBookingServiceImpl implements GymFlipFitBookingService{
         }).collect(Collectors.toList());
     }
 
-    public Optional<GymFlipFitSlot> findNearestAvailableSlot(Long userId, Long centerId,
+    public Optional<GymFlipFitSlot> findNearestAvailableSlot(Integer userId, Integer centerId,
             Date date, LocalTime preferred) {
         java.util.List<GymFlipFitSlot> slots = slotService.getSlotsForDate(centerId, date);
         java.util.List<GymFlipFitSlot> candidates = slots.stream().filter(s -> s.getBookedCount() < s.getCapacity())
@@ -210,7 +210,7 @@ public class GymFlipFitBookingServiceImpl implements GymFlipFitBookingService{
                 .or(() -> candidates.stream().findFirst());
     }
     
-    private Optional<GymFlipFitBooking> findActiveByUserAndDateTime(Long userId, Date date, LocalTime start) {
+    private Optional<GymFlipFitBooking> findActiveByUserAndDateTime(Integer userId, Date date, LocalTime start) {
         return bookings.values().stream()
                 .filter(b -> b.getCustomerId().equals(userId) && b.getStatus().equals("CONFIRMED")).filter(b -> {
                     GymFlipFitSlot s = slotService.getSlotById(b.getSchedule().getSlotId()).orElse(null);

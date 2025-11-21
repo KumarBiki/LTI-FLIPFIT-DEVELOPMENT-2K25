@@ -47,7 +47,7 @@ public class GymFlipFitSchedulerServiceImpl implements GymFlipFitSchedulerServic
 	 */
 	@Override
 	public GymFlipFitScheduler scheduleSlot(GymFlipFitScheduler scheduler) {
-		scheduler.setId(counter.incrementAndGet());
+		scheduler.setId((int)counter.incrementAndGet());
 		schedules.add(scheduler);
 		return scheduler;
 	}

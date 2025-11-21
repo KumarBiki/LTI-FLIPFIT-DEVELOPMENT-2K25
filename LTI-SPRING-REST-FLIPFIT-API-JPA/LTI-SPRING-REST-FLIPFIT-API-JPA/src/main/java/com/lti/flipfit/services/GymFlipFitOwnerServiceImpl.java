@@ -61,7 +61,7 @@ public class GymFlipFitOwnerServiceImpl implements GymFlipFitOwnerService {
      */
     @Override
     public GymFlipFitOwner saveOwner(GymFlipFitOwner owner) {
-        owner.setId(counter.incrementAndGet());
+        owner.setId((int)counter.incrementAndGet());
         owners.add(owner);
         return owner;
     }

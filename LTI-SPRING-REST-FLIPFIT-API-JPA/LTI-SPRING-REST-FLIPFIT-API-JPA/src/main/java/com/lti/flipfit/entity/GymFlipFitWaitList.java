@@ -2,39 +2,40 @@ package com.lti.flipfit.entity;
 
 import java.util.Date;
 
+
 public class GymFlipFitWaitList {
 	
-	private Long id;
-	private Long userId;
-	private Long centerId;
-	private Long slotId;
+	private Integer id;
+	private Integer userId;
+	private Integer centerId;
+	private Integer slotId;
 	private int position;
 	private String status;
 	private Date createdAt;
 	private Date promotedAt;
 	
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Long getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Long getCenterId() {
+	public Integer getCenterId() {
 		return centerId;
 	}
-	public void setCenterId(Long centerId) {
+	public void setCenterId(Integer centerId) {
 		this.centerId = centerId;
 	}
-	public Long getSlotId() {
+	public Integer getSlotId() {
 		return slotId;
 	}
-	public void setSlotId(Long slotId) {
+	public void setSlotId(Integer slotId) {
 		this.slotId = slotId;
 	}
 	public int getPosition() {

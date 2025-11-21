@@ -21,26 +21,26 @@ public class GymFlipFitCustomerServiceImpl implements GymFlipFitCustomerService 
 	}
 	@Override
 	public Optional<GymFlipFitCustomer> findCustomerById(Long id) {
-		return Optional.ofNullable(customers.stream().filter(c -> c.getId().equals(id)).findFirst().orElseThrow(() -> new CustomerNotFoundException(String.format("Customer not found for the given id: %s", id))));
+		return Optional.ofNullable(customers.stream().filter(c -> c.getCustomerId().equals(id)).findFirst().orElseThrow(() -> new CustomerNotFoundException(String.format("Customer not found for the given id: %s", id))));
 	}
 	@Override
 	public GymFlipFitCustomer saveCustomer(GymFlipFitCustomer customer) {
-		customer.setId(counter.incrementAndGet());
+		customer.setCustomerId((int)counter.incrementAndGet());
 		customers.add(customer);
 		return customer;
 	}
 	@Override
 	public GymFlipFitCustomer updateCustomer(Long id, GymFlipFitCustomer customerDetails) {
 		return findCustomerById(id).map(customer -> {
-			customer.setFirstName(customerDetails.getFirstName());
-			customer.setLastName(customerDetails.getLastName());
+			customer.setCustomerFirstName(customerDetails.getCustomerFirstName());
+			customer.setCustomerLastName(customerDetails.getCustomerLastName());
 			customer.setEmail(customerDetails.getEmail());
 			return customer;
 		}).orElse(null);
 	}
 	@Override
 	public void deleteCustomer(Long id) {
-		customers.removeIf(c -> c.getId().equals(id));
+		customers.removeIf(c -> c.getCustomerId().equals(id));
 	}
 
 }

@@ -13,9 +13,9 @@ import com.lti.flipfit.entity.GymFlipFitWaitList;
  */
 public interface GymFlipFitWaitlistService {
 
-	public GymFlipFitWaitList join(Long userId, Long centerId, Long slotId);
+	public GymFlipFitWaitList join(Integer userId, Integer centerId, Integer slotId);
 
-	public Optional<GymFlipFitWaitList> promoteNext(Long centerId, Long slotId);
+	public Optional<GymFlipFitWaitList> promoteNext(Integer centerId, Integer slotId);
 
-	public List<GymFlipFitWaitList> list(Long centerId, Long slotId);
+	public List<GymFlipFitWaitList> list(Integer centerId, Integer slotId);
 }

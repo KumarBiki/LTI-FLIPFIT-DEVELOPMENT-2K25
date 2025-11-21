@@ -45,7 +45,7 @@ public class GymFlipFitSlotServiceImpl implements GymFlipFitSlotService{
 
 	@Override
 	public GymFlipFitSlot createSlot(GymFlipFitSlot slot) {
-		slot.setId(counter.incrementAndGet());
+		slot.setId((int)counter.incrementAndGet());
 		slot.setStatus("OPEN");
 		slot.setBookedCount(0);
 		slots.add(slot);
@@ -117,7 +117,7 @@ public class GymFlipFitSlotServiceImpl implements GymFlipFitSlotService{
 	 */
 
 	@Override
-	public List<GymFlipFitSlot> getSlotsForDate(Long centerId, Date date) {
+	public List<GymFlipFitSlot> getSlotsForDate(Integer centerId, Date date) {
 		return slots.stream().filter(s -> centerId.equals(s.getCenterId()) && date.equals(s.getSlotDate()))
 				.sorted(Comparator.comparing(GymFlipFitSlot::getStartTime)).collect(Collectors.toList());
 	}
@@ -131,7 +131,7 @@ public class GymFlipFitSlotServiceImpl implements GymFlipFitSlotService{
 	 */
 
 	@Override
-	public Optional<GymFlipFitSlot> getSlotById(Long id) {
+	public Optional<GymFlipFitSlot> getSlotById(Integer id) {
 		return slots.stream().filter(c -> c.getId().equals(id)).findFirst();
 	}
 }

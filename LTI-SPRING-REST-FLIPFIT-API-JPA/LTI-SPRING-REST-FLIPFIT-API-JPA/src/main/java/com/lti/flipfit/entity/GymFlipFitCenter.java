@@ -1,25 +1,49 @@
 package com.lti.flipfit.entity;
 
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
-import com.lti.flipfit.constants.CenterStatus;
-
+@Entity
+@Table(name = "gymcenter")
 public class GymFlipFitCenter {
 	
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	
+	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "emailid")
 	private String emailId;
+	
+	@Column(name = "phoneno")
 	private String phoneNo;
+	
+	@OneToOne
+	@JoinColumn(name = "addressid", referencedColumnName = "id")
 	private GymFlipFitAddress address;
+	
+	@Column(name = "status")
 	private String status;
-	private Long ownerId;
-	private Long adminId;
+	
+	@Column(name = "ownerid")
+	private Integer ownerId;
+	
+	@Column(name = "adminid")
+	private Integer adminId;
 	
 	
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -52,16 +76,16 @@ public class GymFlipFitCenter {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Long getOwnerId() {
+	public Integer getOwnerId() {
 		return ownerId;
 	}
-	public void setOwner(Long ownerId) {
+	public void setOwner(Integer ownerId) {
 		this.ownerId = ownerId;
 	}
-	public Long getAdminId() {
+	public Integer getAdminId() {
 		return adminId;
 	}
-	public void setAdmin(Long adminId) {
+	public void setAdmin(Integer adminId) {
 		this.adminId = adminId;
 	}
 	

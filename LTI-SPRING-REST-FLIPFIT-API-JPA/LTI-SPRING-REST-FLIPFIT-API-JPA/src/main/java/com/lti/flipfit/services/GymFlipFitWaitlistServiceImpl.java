@@ -25,7 +25,7 @@ import com.lti.flipfit.entity.GymFlipFitWaitList;
 @Service
 public class GymFlipFitWaitlistServiceImpl implements GymFlipFitWaitlistService {
 
-	private final Map<Long, java.util.List<GymFlipFitWaitList>> waitlists = new ConcurrentHashMap<>();
+	private final Map<Integer, List<GymFlipFitWaitList>> waitlists = new ConcurrentHashMap<>();
     private final AtomicLong counter = new AtomicLong();
 
 
@@ -47,10 +47,10 @@ public class GymFlipFitWaitlistServiceImpl implements GymFlipFitWaitlistService 
  */
 
 
-public GymFlipFitWaitList join(Long userId, Long centerId, Long slotId) {
+public GymFlipFitWaitList join(Integer userId, Integer centerId, Integer slotId) {
         List<GymFlipFitWaitList> list = waitlists.computeIfAbsent(slotId, k -> new java.util.ArrayList<>());
         GymFlipFitWaitList wait = new GymFlipFitWaitList();
-        wait.setId(counter.incrementAndGet());
+        wait.setId((int)counter.incrementAndGet());
         wait.setUserId(userId);
         wait.setCenterId(centerId);
         wait.setSlotId(slotId);
@@ -71,7 +71,7 @@ public GymFlipFitWaitList join(Long userId, Long centerId, Long slotId) {
      * @return an {@link Optional} containing the promoted {@link GymFlipFitWaitList} entry, or empty if none found
      */
 
-    public Optional<GymFlipFitWaitList> promoteNext(Long centerId, Long slotId) {
+    public Optional<GymFlipFitWaitList> promoteNext(Integer centerId, Integer slotId) {
         List<GymFlipFitWaitList> list = waitlists.getOrDefault(slotId, new java.util.ArrayList<>());
         return list.stream().filter(wait -> wait.getStatus().equals("WAITING"))
                 .sorted(java.util.Comparator.comparingInt(GymFlipFitWaitList::getPosition)).findFirst().map(map -> {
@@ -90,7 +90,7 @@ public GymFlipFitWaitList join(Long userId, Long centerId, Long slotId) {
      * @return a list of {@link GymFlipFitWaitList} entries for the specified slot
      */
 
-    public List<GymFlipFitWaitList> list(Long centerId, Long slotId) {
+    public List<GymFlipFitWaitList> list(Integer centerId, Integer slotId) {
         return new ArrayList<>(waitlists.getOrDefault(slotId, new ArrayList<>()));
     }
 

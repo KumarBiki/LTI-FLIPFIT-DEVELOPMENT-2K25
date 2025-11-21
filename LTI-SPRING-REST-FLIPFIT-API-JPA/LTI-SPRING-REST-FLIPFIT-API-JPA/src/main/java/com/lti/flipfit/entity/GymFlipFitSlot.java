@@ -3,19 +3,44 @@ package com.lti.flipfit.entity;
 import java.time.LocalTime;
 import java.util.Date;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "gymslot")
 public class GymFlipFitSlot {
 	
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	
+	@Column(name = "starttime")
 	private LocalTime startTime;
+	
+	@Column(name = "endtime")
 	private LocalTime endTime;
+	
+	@Column(name = "capacity")
 	private int	capacity;
+	
+	@Column(name = "bookedcount")
 	private int bookedCount ;
 	//private boolean isAvailble ;
+	
+	@Column(name = "slotdate")
 	private Date slotDate;
 	//private int reserve ;
 	//private int releasedBookId;
-	private Long centerId;
+	
+	@Column(name = "centerid")
+	private Integer centerId;
 	//private int customerId;
+	
+	@Column(name = "status")
 	private String status;
 	
 	
@@ -31,10 +56,10 @@ public class GymFlipFitSlot {
 	public void setSlotDate(Date slotDate) {
 		this.slotDate = slotDate;
 	}
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -42,10 +67,10 @@ public class GymFlipFitSlot {
 	 * public int getCustomerId() { return customerId; } public void
 	 * setCustomerId(int customerId) { this.customerId = customerId; }
 	 */
-	public Long getCenterId() {
+	public Integer getCenterId() {
 		return centerId;
 	}
-	public void setCenterId(Long centerId) {
+	public void setCenterId(Integer centerId) {
 		this.centerId = centerId;
 	}
 	public LocalTime getStartTime() {

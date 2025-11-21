@@ -4,15 +4,39 @@ import java.util.Date;
 
 import com.lti.flipfit.constants.BookingStatus;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name="gymbooking")
 public class GymFlipFitBooking {
 	
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
+	
+	@Column(name = "status")
 	private String status;
+	
+	@Column(name = "bookedat")
 	private Date bookedAt;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "schedulerid", referencedColumnName = "schedulerid")
 	private GymFlipFitScheduler schedule;
-	private Long customerId;
-	//private Long centerId;
-	//private Long slotId;
+	
+	@Column(name = "customerid")
+	private Integer customerId;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "paymentid", referencedColumnName = "id")
 	private GymFlipFitPayment payment;
 	
 	public GymFlipFitPayment getPayment() {
@@ -33,10 +57,10 @@ public class GymFlipFitBooking {
 	public void setCenterId(Long centerId) {
 		this.centerId = centerId;
 	}*/
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getStatus() {
@@ -57,10 +81,10 @@ public class GymFlipFitBooking {
 	public void setSchedule(GymFlipFitScheduler schedule) {
 		this.schedule = schedule;
 	}
-	public Long getCustomerId() {
+	public Integer getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(Long customerId) {
+	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
 	}
 	

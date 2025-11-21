@@ -96,7 +96,7 @@ public class GymFlipFitAdminServiceImpl implements GymFlipFitAdminService {
 
 	@Override
 	public GymFlipFitAdmin createAdmin(GymFlipFitAdmin admin) {
-		admin.setId(counter.incrementAndGet());
+		admin.setId((int)counter.incrementAndGet());
 		admins.add(admin);
 		adminRepository.save(admin);
 		return admin;

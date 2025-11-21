@@ -28,7 +28,7 @@ public class GymFlipFitCenterServiceImpl implements GymFlipFitCenterService {
  
 	@Override
 	public GymFlipFitCenter saveCenter(GymFlipFitCenter gymFlipFitCenter) {
-		gymFlipFitCenter.setId(counter.incrementAndGet());
+		gymFlipFitCenter.setId((int)counter.incrementAndGet());
 		centers.add(gymFlipFitCenter);
 		return gymFlipFitCenter;
 	}

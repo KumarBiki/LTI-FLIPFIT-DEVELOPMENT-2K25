@@ -31,7 +31,7 @@ public class GymFlipFitNotificationServiceImpl implements GymFlipFitNotification
      */
     @Override
 	public GymFlipFitNotification sendNotification(GymFlipFitNotification notification) {
-		notification.setId(counter.incrementAndGet());
+		notification.setId((int)counter.incrementAndGet());
 		notifications.add(notification);
         return notification;
 

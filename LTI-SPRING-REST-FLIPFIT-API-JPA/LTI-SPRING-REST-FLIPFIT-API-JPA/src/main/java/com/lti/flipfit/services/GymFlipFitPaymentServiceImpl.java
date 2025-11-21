@@ -1,6 +1,7 @@
 package com.lti.flipfit.services;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,12 +41,12 @@ public class GymFlipFitPaymentServiceImpl implements GymFlipFitPaymentService {
      */
     public GymFlipFitPayment processPayment(GymFlipFitPayment payment) {
     	GymFlipFitPayment gymPayment = new GymFlipFitPayment();
-    	gymPayment.setId(counter.incrementAndGet());
-    	gymPayment.setMethod(payment.getMethod());
+    	gymPayment.setId((int)counter.incrementAndGet());
+    	gymPayment.setPaymentMode(payment.getPaymentMode());
     	gymPayment.setAmount(payment.getAmount());
     	gymPayment.setPaidAt(new Date());
     	gymPayment.setStatus("PAID");
-    	gymPayment.setBookingId(payment.getBookingId());
+    	gymPayment.setBooking(payment.getBooking());
     	payments.add(gymPayment);
     	return gymPayment;
     	

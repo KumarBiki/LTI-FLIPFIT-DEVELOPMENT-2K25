@@ -1,19 +1,40 @@
 package com.lti.flipfit.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+
+@Entity
+@Table(name="gymnotification")
 public class GymFlipFitNotification {
 	
-	private Long id;
-	private String notificationChannel ;
-	private  String Tittle ;
-	private  String message;
-	private String read;
-	private String sentAt;
-	private String markRead;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	
-	public Long getId() {
+	@Column(name = "notificationchannel")
+	private String notificationChannel ;
+	
+	@Column(name = "title")
+	private  String title ;
+	
+	@Column(name = "message")
+	private  String message;
+	
+	@Column(name = "read")
+	private String read;
+	
+	@Column(name = "sentat")
+	private String sentAt;
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getNotificationChannel() {
@@ -23,10 +44,10 @@ public class GymFlipFitNotification {
 		this.notificationChannel = notificationChannel;
 	}
 	public String getTittle() {
-		return Tittle;
+		return title;
 	}
 	public void setTittle(String tittle) {
-		Tittle = tittle;
+		title = tittle;
 	}
 	public String getMessage() {
 		return message;
@@ -45,12 +66,6 @@ public class GymFlipFitNotification {
 	}
 	public void setSentAt(String sentAt) {
 		this.sentAt = sentAt;
-	}
-	public String getMarkRead() {
-		return markRead;
-	}
-	public void setMarkRead(String markRead) {
-		this.markRead = markRead;
 	}
 
 }
