@@ -14,11 +14,11 @@ public interface GymFlipFitAdminService {
 	public Optional<GymFlipFitCustomer> findCustomerById(Long id);
 	public GymFlipFitCustomer updateCustomer(Long id, GymFlipFitCustomer customerDetails);
 
-	public Optional<GymFlipFitAdmin> findAdminById(Long id);
+	public Optional<GymFlipFitAdmin> findAdminById(Integer id);
 	public GymFlipFitAdmin createAdmin(GymFlipFitAdmin admin);
-	public GymFlipFitAdmin updateAdmin(Long id, GymFlipFitAdmin admin);
+	public GymFlipFitAdmin updateAdmin(Integer id, GymFlipFitAdmin admin);
 	public List<GymFlipFitAdmin> findAllAdmins();
-	public void deleteAdmin(Long id);
+	public void deleteAdmin(Integer id);
 
 
 }

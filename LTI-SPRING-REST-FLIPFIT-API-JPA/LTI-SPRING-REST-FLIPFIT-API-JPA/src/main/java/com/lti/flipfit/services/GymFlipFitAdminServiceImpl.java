@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import com.lti.flipfit.entity.GymFlipFitSlot;
 import com.lti.flipfit.exception.AdminNotFoundException;
 import com.lti.flipfit.exception.CustomerNotFoundException;
 import com.lti.flipfit.repository.GymFlipFitAdminRepository;
+import com.lti.flipfit.rest.GymFlipFitAdminController;
 
 @Service
 /**
@@ -50,6 +53,8 @@ public class GymFlipFitAdminServiceImpl implements GymFlipFitAdminService {
 	private final List<GymFlipFitAdmin> admins = new ArrayList<>();
 
 	private final AtomicLong counter = new AtomicLong();
+	
+	private static final Logger logger = LoggerFactory.getLogger(GymFlipFitAdminController.class);
 
 
 	// Customer methods implementations 
@@ -90,37 +95,52 @@ public class GymFlipFitAdminServiceImpl implements GymFlipFitAdminService {
 	}
 
 	@Override
-	public Optional<GymFlipFitAdmin> findAdminById(Long id) {
-		return Optional.ofNullable(admins.stream().filter(c -> c.getId().equals(id)).findFirst().orElseThrow(() -> new AdminNotFoundException(String.format("Admin not found for the given id: %s", id))));
+	public Optional<GymFlipFitAdmin> findAdminById(Integer id) {
+		//return Optional.ofNullable(admins.stream().filter(c -> c.getId().equals(id)).findFirst().orElseThrow(() -> new AdminNotFoundException(String.format("Admin not found for the given id: %s", id))));
+		return Optional.ofNullable(adminRepository.findById(id.intValue()).orElseThrow(() -> new AdminNotFoundException(String.format("Admin not found with id %s", id))));
 	}
 
 	@Override
 	public GymFlipFitAdmin createAdmin(GymFlipFitAdmin admin) {
-		admin.setId((int)counter.incrementAndGet());
-		admins.add(admin);
-		adminRepository.save(admin);
-		return admin;
+		//admin.setId((int)counter.incrementAndGet());
+		//admins.add(admin);
+		GymFlipFitAdmin adminDb = adminRepository.save(admin);
+		logger.info("Admin created successfully: " + adminDb);
+		return adminDb;
 	}
 
 	@Override
-	public GymFlipFitAdmin updateAdmin(Long id, GymFlipFitAdmin admin) {
-		return findAdminById(id).map(ad -> {
+	public GymFlipFitAdmin updateAdmin(Integer id, GymFlipFitAdmin admin) {
+		/*return findAdminById(id).map(ad -> {
 			ad.setFirstName(admin.getFirstName());
 			ad.setLastName(admin.getLastName());
 			ad.setEmail(admin.getEmail());
 			return ad;
-		}).orElse(null);
+		}).orElse(null);*/
+		GymFlipFitAdmin adminDb = findAdminById(id).get();
+		adminDb.setFirstName(admin.getFirstName());
+		adminDb.setLastName(admin.getLastName());
+		adminDb.setEmail(admin.getEmail());
+		adminDb.setPhoneNo(admin.getPhoneNo());
+		adminDb.setStatus(admin.getStatus());
+		adminDb.setUpdatedAt(new Date());
+		adminDb.setAddress(admin.getAddress());
+		adminRepository.save(adminDb);
+		logger.info("Admin updated successfully." + adminDb);
+		return adminDb;
 	}
 
 	@Override
 	public List<GymFlipFitAdmin> findAllAdmins() {
-		return new ArrayList<>(admins);
+		logger.info("Finding all admins.");
+		return adminRepository.findAll();
 	}
 
 	@Override
-	public void deleteAdmin(Long id) {
-		admins.removeIf(c -> c.getId().equals(id));
-
+	public void deleteAdmin(Integer id) {
+		//admins.removeIf(c -> c.getId().equals(id));
+		adminRepository.deleteById(id);
+		logger.info("Admin updated successfully." + id);
 	}
 
 	/**

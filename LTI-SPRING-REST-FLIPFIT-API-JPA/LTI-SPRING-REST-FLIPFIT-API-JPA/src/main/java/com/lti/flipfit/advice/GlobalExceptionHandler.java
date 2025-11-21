@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import com.lti.flipfit.entity.ErrorResponse;
+import com.lti.flipfit.exception.AdminNotFoundException;
 import com.lti.flipfit.exception.BookingConflictException;
 import com.lti.flipfit.exception.CustomerNotFoundException;
 import com.lti.flipfit.exception.PaymentFailureException;
@@ -62,6 +63,15 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(ScheduleNotFoundException.class)
 	public ResponseEntity<ErrorResponse> handleScheduleNotFoundException(ScheduleNotFoundException ex, WebRequest request){
+
+		ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+
+		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.CONFLICT);
+
+	}
+	
+	@ExceptionHandler(AdminNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleScheduleNotFoundException(AdminNotFoundException ex, WebRequest request){
 
 		ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
 

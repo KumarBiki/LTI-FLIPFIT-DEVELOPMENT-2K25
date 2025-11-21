@@ -5,6 +5,8 @@ package com.lti.flipfit.rest;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,7 @@ import com.lti.flipfit.entity.GymFlipFitCustomer;
 import com.lti.flipfit.services.GymFlipFitAdminService;
 
 import jakarta.ws.rs.core.MediaType;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * REST controller for managing Admin, slots related operations in the GymFlipFit application.
@@ -37,10 +40,11 @@ import jakarta.ws.rs.core.MediaType;
  *     <li><b>GET /customer/{id}</b> - Fetch customer details by ID</li>
  * </ul>
 **/
-
 @RestController
 @RequestMapping("/admin")
 public class GymFlipFitAdminController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(GymFlipFitAdminController.class);
 	
 	@Autowired
 	private GymFlipFitAdminService adminService;
@@ -53,6 +57,7 @@ public class GymFlipFitAdminController {
 	 */
 	@RequestMapping(value = "/customers", produces = MediaType.APPLICATION_JSON, method = RequestMethod.GET)
 	public List<GymFlipFitCustomer> getAllCustomer() {
+		logger.info("Getting all customers");
 		return adminService.findAllCustomers();
 	}
 	
@@ -64,6 +69,7 @@ public class GymFlipFitAdminController {
 	 */
 	@RequestMapping(value = "/customer/{id}", produces = MediaType.APPLICATION_JSON, method = RequestMethod.GET)
 	public ResponseEntity<GymFlipFitCustomer> getCustomerById(@PathVariable Long id) {
+		logger.info("Fetching customer for id: "+ id);
 		return adminService.findCustomerById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 	
@@ -75,6 +81,7 @@ public class GymFlipFitAdminController {
 	 */
 	@RequestMapping(value = "/updateCustomer/{id}", produces = MediaType.APPLICATION_JSON, method = RequestMethod.PUT)
 	public ResponseEntity<GymFlipFitCustomer> updateCustomer(@PathVariable Long id, @RequestBody GymFlipFitCustomer customerDetails) {
+		logger.info("Updating customer for id: "+ id);
 		GymFlipFitCustomer updatedCustomer = adminService.updateCustomer(id, customerDetails);
 		if (updatedCustomer != null) {
 			return ResponseEntity.ok(updatedCustomer);
@@ -91,6 +98,7 @@ public class GymFlipFitAdminController {
 	 */
 	@RequestMapping(value = "/", produces = MediaType.APPLICATION_JSON, method = RequestMethod.GET)
 	public List<GymFlipFitAdmin> getAllAdmins() {
+		logger.info("Fetching all Admins");
 		return adminService.findAllAdmins();
 	}
 
@@ -101,19 +109,22 @@ public class GymFlipFitAdminController {
 	 * @Exception 
 	 */
 	@RequestMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON, method = RequestMethod.GET)
-	public ResponseEntity<GymFlipFitAdmin> getAdminById(@PathVariable Long id) {
+	public ResponseEntity<GymFlipFitAdmin> getAdminById(@PathVariable Integer id) {
+		logger.info("Getting Admin for id: "+ id);
 		return adminService.findAdminById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
 	}
 
 	
 	@RequestMapping(value = "/createAdmin", produces = MediaType.APPLICATION_JSON, method = RequestMethod.POST)
 	public ResponseEntity<GymFlipFitAdmin> createAdmin(@RequestBody GymFlipFitAdmin admin) {
+		logger.info("Creating Admin");
 		GymFlipFitAdmin createdAdmin = adminService.createAdmin(admin);
 		return new ResponseEntity<>(createdAdmin, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/updateAdmin/{id}", produces = MediaType.APPLICATION_JSON, method = RequestMethod.PUT)
-	public ResponseEntity<GymFlipFitAdmin> updateCustomer(@PathVariable Long id, @RequestBody GymFlipFitAdmin admin) {
+	public ResponseEntity<GymFlipFitAdmin> updateCustomer(@PathVariable Integer id, @RequestBody GymFlipFitAdmin admin) {
+		logger.info("Updating Admin for id: "+ id);
 		GymFlipFitAdmin updatedAdmin = adminService.updateAdmin(id, admin);
 		if (updatedAdmin != null) {
 			return ResponseEntity.ok(updatedAdmin);
@@ -123,7 +134,8 @@ public class GymFlipFitAdminController {
 	}
 
 	@RequestMapping(value = "/deleteAdmin/{id}", produces = MediaType.APPLICATION_JSON, method = RequestMethod.DELETE)
-	public ResponseEntity<Void> deleteAdmin(@PathVariable Long id) {
+	public ResponseEntity<Void> deleteAdmin(@PathVariable Integer id) {
+		logger.info("Deleting Admin for id: "+ id);
 		adminService.deleteAdmin(id);
 		return ResponseEntity.noContent().build();
 	}

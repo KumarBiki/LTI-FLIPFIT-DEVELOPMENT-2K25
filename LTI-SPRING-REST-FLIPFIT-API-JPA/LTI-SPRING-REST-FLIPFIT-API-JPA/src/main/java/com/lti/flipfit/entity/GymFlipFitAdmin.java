@@ -100,6 +100,12 @@ public class GymFlipFitAdmin{
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
 	}
+	@Override
+	public String toString() {
+		return "GymFlipFitAdmin [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", phoneNo=" + phoneNo + ", status=" + status + ", address=" + address + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + "]";
+	}
 
 
 
