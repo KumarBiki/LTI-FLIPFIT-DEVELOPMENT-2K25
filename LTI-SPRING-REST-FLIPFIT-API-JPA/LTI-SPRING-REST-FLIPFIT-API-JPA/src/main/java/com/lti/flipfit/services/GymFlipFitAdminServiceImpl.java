@@ -54,7 +54,7 @@ public class GymFlipFitAdminServiceImpl implements GymFlipFitAdminService {
 
 	private final AtomicLong counter = new AtomicLong();
 	
-	private static final Logger logger = LoggerFactory.getLogger(GymFlipFitAdminController.class);
+	private static final Logger logger = LoggerFactory.getLogger(GymFlipFitAdminServiceImpl.class);
 
 
 	// Customer methods implementations 

@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 public class GymFlipFitUser {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(name = "firstname")
@@ -33,7 +33,7 @@ public class GymFlipFitUser {
 	@Column(name = "password")
 	private String password;
 	
-	@Column(name = "phoneNo")
+	@Column(name = "phoneno")
 	private String phoneNo;
 	
 	@Column(name = "status")
@@ -118,6 +118,12 @@ public class GymFlipFitUser {
 	}
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+	@Override
+	public String toString() {
+		return "GymFlipFitUser [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", phoneNo=" + phoneNo + ", status=" + status + ", address=" + address
+				+ ", role=" + role + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + "]";
 	}
 	
 	

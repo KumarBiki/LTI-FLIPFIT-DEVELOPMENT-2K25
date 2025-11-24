@@ -1,5 +1,10 @@
 package com.lti.flipfit.rest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lti.flipfit.entity.GymFlipFitUser;
+import com.lti.flipfit.services.GymFlipFitUserService;
 
 import jakarta.jws.soap.SOAPBinding.Use;
 
@@ -45,15 +51,24 @@ import jakarta.jws.soap.SOAPBinding.Use;
 @RequestMapping("/user")
 public class GymFlipFitUserController {
 	
+	@Autowired
+	private GymFlipFitUserService userService;
+	
+	Logger logger = LoggerFactory.getLogger(GymFlipFitUserController.class);
+	
 	@GetMapping("/{id}")
 	public ResponseEntity<GymFlipFitUser> getUser(@PathVariable("id") int id) {
-		return null;
+		logger.info("Fetching user Information for id: " + id);
+		GymFlipFitUser user = userService.getUser(id);
+		return new ResponseEntity(user, HttpStatus.OK);
 		
 	}
 	
 	@PostMapping("/register")
 	public ResponseEntity<GymFlipFitUser> registerUser(@RequestBody GymFlipFitUser user) {
-		return null;
+		logger.info("Registering user");
+		GymFlipFitUser userDb = userService.registerUser(user);
+		return new ResponseEntity(userDb, HttpStatus.OK);
 		
 	}
 	

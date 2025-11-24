@@ -18,6 +18,7 @@ import com.lti.flipfit.exception.CustomerNotFoundException;
 import com.lti.flipfit.exception.PaymentFailureException;
 import com.lti.flipfit.exception.ScheduleNotFoundException;
 import com.lti.flipfit.exception.SlotNotFoundException;
+import com.lti.flipfit.exception.UserNotFoundException;
 
 /**
  * 
@@ -71,7 +72,16 @@ public class GlobalExceptionHandler {
 	}
 	
 	@ExceptionHandler(AdminNotFoundException.class)
-	public ResponseEntity<ErrorResponse> handleScheduleNotFoundException(AdminNotFoundException ex, WebRequest request){
+	public ResponseEntity<ErrorResponse> handleAdminNotFoundException(AdminNotFoundException ex, WebRequest request){
+
+		ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+
+		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.CONFLICT);
+
+	}
+	
+	@ExceptionHandler(UserNotFoundException.class)
+	public ResponseEntity<ErrorResponse> handleUserNotFoundException(UserNotFoundException ex, WebRequest request){
 
 		ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
 
